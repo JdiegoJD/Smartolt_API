@@ -45,3 +45,17 @@ Reboot () {
 curl --location -g --request POST "$smartolt_URL/reboot/$onu_id" \
 --header "X-Token: $API_KEY"
 }
+
+Mostrar_OLT () {
+curl --location -g "https://$Dominio.smartolt.com/api/system/get_olts" \
+--header "X-Token: $API_KEY"
+}
+
+Mover_Onus () {
+curl --location -g "$smartolt_URL/move/$onu_id" \
+--header "X-Token: $API_KEY" \
+--form "olt_id="$1"" \
+--form "board="$2"" \
+--form "port="$3""
+}
+
