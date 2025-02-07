@@ -78,6 +78,19 @@ Crear_Vport () {
 | telnet ${olt_ip[$index]}
 }
 
+Pedir_Datos_Migracion () {
+
+Mostrar_OLT
+
+echo "Ingrese la OLT ID donde desea mover las ONUs"
+read OLT_ID
+
+echo "Ingrese la tarjeta a donde va a mover las ONUs"
+read BOARD
+
+echo "Ingrese el puerto a donde desea mover las ONUs"
+read PORT
+}
 
 while [ true ]; do
 
@@ -88,7 +101,8 @@ Elija la operacion que desea realizar
 3 - Cambiar Velocidad
 4 - Resync Config
 5 - Reiniciar Onus
-6 - Salir
+6 - Mover Onus de PON
+7 - Salir
 EOF
 
 read
@@ -149,7 +163,18 @@ read
                    done
                    exit
                    ;;
-		6) exit
+		6) 
+  		   Pedir_Archivo
+                   Pedir_Datos_Migracion
+                   lineas=$(wc -l $SN_onus | grep -Eo '^[0-9]+')
+                   for i in $(seq $lineas); do
+                        onu_id=$(sed -n $i\p $SN_onus)
+                        Mover_Onus $OLT_ID $BOARD $PORT
+                   done
+                   exit
+                   ;;
+
+		7) exit
 		   ;;
 	esac
 
