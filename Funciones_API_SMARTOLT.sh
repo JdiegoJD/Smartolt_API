@@ -4,7 +4,7 @@
 smartolt_URL="https://$Dominio.smartolt.com/api/onu"
 
 Cambiar_velocidad () {
-curl --location -g "$smartolt_URL/update_onu_speed_profiles/$onu_id" --header "X-Token: $API_KEY"
+curl --location -g "$smartolt_URL/update_onu_speed_profiles/$onu_id" --header "X-Token: $API_KEY" \
 -F "upload_speed_profile_name="$UP_PLAN"" \
 -F "download_speed_profile_name="$DOWN_PLAN""
 return 0
